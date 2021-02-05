@@ -23,6 +23,15 @@ class ApplicationController extends Controller
 
 	public function sendMail($request)
 	{
+		$to      = 'nikola.barac.kg@gmail.com';
+		$subject = 'the subject';
+		$message = 'hello';
+		$headers = array(
+			'From' => 'nikola.angerfist@gmail.com',
+			'Reply-To' => 'nikola.angerfist@gmail.com',
+			'X-Mailer' => 'PHP/' . phpversion()
+		);
 
+		mail($to, $subject, $message, $headers);
 	}
 }
