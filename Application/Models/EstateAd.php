@@ -9,7 +9,7 @@ class EstateAd extends Model
 	protected $table		= 'estate_ad';
 	protected $primaryKey	= 'id_ad';
 
-	public function getByTitle($title, $limit = 10)
+	public static function getByTitle($title, $limit = 10)
 	{
 		return EstateAd::where('estate_ad.deleted', '=', 0)
 			->whereLike('estate_ad.ad_title', "%{$title}%")
