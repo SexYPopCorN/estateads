@@ -22,8 +22,6 @@ abstract class Mail
 			'X-Mailer'		=> 'PHP/' . phpversion()
 		];
 
-		// var_dump("{$body}");
-
 		mail($this->to, $this->subject, "{$body}", $headers);
 	}
 
