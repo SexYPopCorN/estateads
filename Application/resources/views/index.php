@@ -56,6 +56,7 @@
 				<h3>Oglas</h3>
 				<hr class="mt-2 mb-3" />
 				<form id="ad-form" method="post" action="<?= url('send-mail') ?>">
+					<input type="text" name="id_ad" hidden>
 					<div class="form-group row mb-5">
 						<label class="col-sm-4 col-form-label">Naslov</label>
 						<div class="col-sm-8">

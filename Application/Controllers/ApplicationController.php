@@ -24,6 +24,7 @@ class ApplicationController extends Controller
 
 	public function sendMail($request)
 	{
+		$id		= $request->input('id_ad');
 		$to		= $request->input('email');
 		$data	= $request->input();
 
@@ -31,7 +32,7 @@ class ApplicationController extends Controller
 		{
 			(new EstateAdMail($data))
 				->to($to)
-				->subject('Estate Ad')
+				->subject("Oglas {$id}")
 				->send();
 		}
 		catch (Exception $exception)
