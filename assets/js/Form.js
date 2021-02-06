@@ -45,24 +45,28 @@ class Form {
 
 		let serialized	= this.form.serializeArray();
 		let data		= {};
+		let start		= Date.now();
 
 		serialized.forEach((record) => {
 			data[record.name] = record.value;
 		});
 
-		$('.overlay').fadeIn();
+		$('.overlay').show();
 
 		$.ajax({
 			url: this.form.attr('action'),
 			type: this.form.attr('method'),
 			data: data,
-			success: (response) => {
-				$('.overlay').fadeOut();
-				this.form.trigger('reset');
+			success: () => {
+				let elapsed = Date.now() - start;
 
-				toastr.success('Uspešno ste poslali upit');
+				setTimeout(() => {
+					this.form.trigger('reset');
+					$('.overlay').hide();
+					toastr.success('Uspešno ste poslali upit');
+				}, 500 - elapsed);
 			},
-			error: (response) => {
+			error: () => {
 				toastr.error('Došlo je do greške na serveru');
 			}
 		});
