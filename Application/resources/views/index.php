@@ -96,7 +96,7 @@
 					</div>
 					<div class="list-group d-grid">
 						<div id="ad-search-results"></div>
-						<div class="search-spinner spinner-border mt-2 mb-2 mx-auto" role="status"></div>
+						<div class="search-spinner spinner-border mt-2 mb-2 mx-auto" role="status" style="display: none;"></div>
 					</div>
 				</div>
 			</div>

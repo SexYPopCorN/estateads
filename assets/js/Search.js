@@ -17,7 +17,6 @@ class Search {
 		this.search		= this.search.bind(this);
 
 		this.input.on('input', this.search);
-		$('.search-spinner').hide();
 	}
 
 	async search(event) {
@@ -32,16 +31,16 @@ class Search {
 		$('.search-spinner').show();
 
 		await this.debounce();
-		this.results = await this.getResults();
+		await this.getResults();
 		this.renderResults();
 
 		$('.search-spinner').hide();
 	}
 
 	async debounce() {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			this.timeout = setTimeout(resolve, Search.DEBOUNCE);
-		})
+		});
 	}
 
 	async getResults() {
@@ -54,6 +53,8 @@ class Search {
 					if (typeof(response) === 'string') {
 						response = JSON.parse(response);
 					}
+
+					this.results = response;
 
 					resolve(response);
 				},
