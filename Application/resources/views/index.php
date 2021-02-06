@@ -94,7 +94,9 @@
 							<i class="fas fa-search"></i>
 						</span>
 					</div>
-					<div id="ad-search-results" class="list-group">
+					<div class="list-group d-grid">
+						<div id="ad-search-results"></div>
+						<div class="search-spinner spinner-border mt-2 mb-2 mx-auto" role="status"></div>
 					</div>
 				</div>
 			</div>

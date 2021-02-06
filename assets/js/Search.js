@@ -17,31 +17,28 @@ class Search {
 		this.search		= this.search.bind(this);
 
 		this.input.on('input', this.search);
+		$('.search-spinner').hide();
 	}
 
 	async search(event) {
 		this.value = $(event.target).val();
 
-		if (this.value.length < Search.MIN_LENGTH) {
-			this.clearResults();
+		this.reset();
 
+		if (this.value.length < Search.MIN_LENGTH) {
 			return;
 		}
 
+		$('.search-spinner').show();
+
 		await this.debounce();
-
 		this.results = await this.getResults();
-
-		this.clearResults();
 		this.renderResults();
-		this.initializeResults();
+
+		$('.search-spinner').hide();
 	}
 
 	async debounce() {
-		if (this.timeout !== null) {
-			clearTimeout(this.timeout);
-		}
-
 		return new Promise((resolve, reject) => {
 			this.timeout = setTimeout(resolve, Search.DEBOUNCE);
 		})
@@ -67,8 +64,13 @@ class Search {
 		})
 	}
 
-	clearResults() {
+	reset() {
+		if (this.timeout !== null) {
+			clearTimeout(this.timeout);
+		}
+
 		$('.search-result').off('click');
+		$('.search-spinner').hide();
 
 		this.container.empty();
 	}
@@ -88,16 +90,14 @@ class Search {
 		}
 
 		this.container.html(html);
-	}
 
-	initializeResults() {
 		const _this = this;
 
 		$('.search-result').on('click', function() {
 			let key		= $(this).data('key');
 			let record	= _this.results[key];
 
-			_this.clearResults();
+			_this.reset();
 			_this.input.val('');
 			_this.form.autocomplete(record);
 		});
