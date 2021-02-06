@@ -164,12 +164,16 @@
 					<div class="form-group row mb-5">
 						<label class="col-sm-4 col-form-label">Komentar</label>
 						<div class="col-sm-8">
-							<textarea class="form-control" name="comment" rows="4" cols="50"></textarea>
+							<textarea class="form-control" name="comment" rows="3" cols="50"></textarea>
 							<div class="invalid-tooltip"></div>
 						</div>
 					</div>
 
-					<input class="btn btn-primary mt-2" type="submit" value="Pošalji" />
+					<div class="col-xs-12">
+						<div class="text-right">
+							<button type="submit" class="btn btn-primary pull-right">Pošalji</button>
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>
