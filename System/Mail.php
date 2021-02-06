@@ -8,17 +8,18 @@ use System\Config;
 abstract class Mail
 {
 	private $to;
+	private $from;
 	private $subject;
 
-	public function send($from = null)
+	public function send()
 	{
-		$from		= ($from === null) ? Config::get('mail.sender') : $from;
+		$from		= ($this->from === null) ? Config::get('mail.sender') : $this->from;
 		$body		= $this->build();
 		$headers	= [
 			'MIME-Version'	=> '1.0',
 			'Content-type'	=> 'text/html;charset=UTF-8',
-			'From'			=> 'nikola.angerfist@gmail.com',
-			'Reply-To'		=> 'nikola.angerfist@gmail.com',
+			'From'			=> "{$from}",
+			'Reply-To'		=> "{$from}",
 			'X-Mailer'		=> 'PHP/' . phpversion()
 		];
 
@@ -28,6 +29,13 @@ abstract class Mail
 	public function to($to)
 	{
 		$this->to = $to;
+
+		return $this;
+	}
+
+	public function from($from)
+	{
+		$this->from = $from;
 
 		return $this;
 	}
