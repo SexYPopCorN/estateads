@@ -50,17 +50,20 @@ class Form {
 			data[record.name] = record.value;
 		});
 
+		$('.overlay').fadeIn();
+
 		$.ajax({
 			url: this.form.attr('action'),
 			type: this.form.attr('method'),
 			data: data,
 			success: (response) => {
+				$('.overlay').fadeOut();
 				this.form.trigger('reset');
 
-				alert('Uspešno ste poslali upit!');
+				toastr.success('Uspešno ste poslali upit');
 			},
 			error: (response) => {
-				alert('Došlo je do greške na serveru!');
+				toastr.error('Došlo je do greške na serveru');
 			}
 		});
 	}

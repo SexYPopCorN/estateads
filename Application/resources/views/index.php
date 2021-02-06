@@ -9,13 +9,16 @@
 
 	<link rel="icon" href="data:;base64,=">
 	<link rel="stylesheet" href="<?= asset('css/bootstrap.min.css')?>">
+	<link rel="stylesheet" href="<?= asset('css/toastr.min.css')?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
 	<script src="<?= asset('js/jquery.js')?>"></script>
 	<script src="<?= asset('js/bootstrap.min.js')?>"></script>
+	<script src="<?= asset('js/toastr.min.js')?>"></script>
 	<script src="<?= asset('js/Validator.js')?>"></script>
 	<script src="<?= asset('js/Form.js')?>"></script>
 	<script src="<?= asset('js/Search.js')?>"></script>
+
 
 	<style>
 		.card {
@@ -31,11 +34,54 @@
 			transform: scale(1.05);
 			box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 		}
+
+		.overlay {
+			background: #ffffff;
+			color: #666666;
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			z-index: 5000;
+			top: 0;
+			left: 0;
+			float: left;
+			text-align: center;
+			padding-top: 25%;
+			opacity: .80;
+			display: none;
+		}
+
+		.spinner {
+			margin: 0 auto;
+			height: 64px;
+			width: 64px;
+			animation: rotate 0.8s infinite linear;
+			border: 5px solid firebrick;
+			border-right-color: transparent;
+			border-radius: 50%;
+		}
+
+		@keyframes rotate {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
 	</style>
 </head>
 
 <body>
+	<div class="overlay">
+		<div class="spinner"></div>
+		<br />
+		Molimo sačekajte
+	</div>
 	<div class="container bg-light">
+		<div class="row mb-5">
+		</div>
 		<div class="row">
 			<div class="col-sm-6">
 				<h3>Pretraga</h3>
