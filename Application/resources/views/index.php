@@ -88,14 +88,14 @@
 					<div class="form-group row mb-5">
 						<label class="col-sm-4 col-form-label">Cena</label>
 						<div class="col-sm-8">
-							<input class="form-control" name="price" type="text" data-rules="required" />
+							<input class="form-control" name="price" type="text" data-rules="required|numeric" />
 							<div class="invalid-tooltip"></div>
 						</div>
 					</div>
 					<div class="form-group row mb-5">
 						<label class="col-sm-4 col-form-label">Kvadratura</label>
 						<div class="col-sm-8">
-							<input class="form-control" name="surface" type="text" data-rules="required" />
+							<input class="form-control" name="surface" type="text" data-rules="required|numeric" />
 							<div class="invalid-tooltip"></div>
 						</div>
 					</div>
@@ -109,7 +109,7 @@
 					<div class="form-group row mb-5">
 						<label class="col-sm-4 col-form-label">Email</label>
 						<div class="col-sm-8">
-							<input class="form-control" name="email" type="text" data-rules="email|required" />
+							<input class="form-control" name="email" type="text" data-rules="required|email" />
 							<div class="invalid-tooltip"></div>
 						</div>
 					</div>
