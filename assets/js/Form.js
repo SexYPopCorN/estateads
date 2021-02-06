@@ -21,6 +21,8 @@ class Form {
 					.text(value);
 			}
 		}
+
+		this.validator.clearErrors();
 	}
 
 	getFields() {

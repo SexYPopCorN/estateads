@@ -19,6 +19,8 @@ class Validator {
 	run() {
 		let valid = true;
 
+		this.clearErrors();
+
 		for (let name in this.rules) {
 			let rules = this.rules[name];
 
@@ -37,6 +39,10 @@ class Validator {
 		}
 
 		return valid;
+	}
+
+	clearErrors() {
+		this.fields.removeClass('is-invalid');
 	}
 
 	prepare() {
@@ -134,7 +140,6 @@ class Numeric extends Rule
 {
 	test() {
 		let value = this.field.val() || this.field.text();
-
 
 		return !!value.match(/^([0-9]+)(\.[0-9]*)?$/);
 	}
