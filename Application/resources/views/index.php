@@ -1,201 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Oglasi</title>
+	<title>Estate Ads</title>
+
+	<link rel="icon" href="data:;base64,=">
+	<link rel="stylesheet" href="<?= asset('css/bootstrap.min.css')?>">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
 	<script src="<?= asset('js/jquery.js')?>"></script>
+	<script src="<?= asset('js/bootstrap.min.js')?>"></script>
+	<script src="<?= asset('js/Validator.js')?>"></script>
+	<script src="<?= asset('js/Form.js')?>"></script>
+	<script src="<?= asset('js/Search.js')?>"></script>
+
+	<style>
+		.card {
+			border-radius: 4px;
+			background: #fff;
+			box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+			transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+			padding: 14px 80px 18px 36px;
+			cursor: pointer;
+		}
+
+		.card:hover {
+			transform: scale(1.05);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+		}
+	</style>
 </head>
+
 <body>
-	<div>
-		<input id="ad-search" type="text" />
-		<div id="ad-search-results"></div>
-	</div>
-
-	<form id="ad-form" type="post" action="<?= url('send-mail') ?>">
-		<div>
-			<label>Naslov oglasa</label>
-			<input name="ad_title" type="text" />
-		</div>
-		<div>
-			<label>Grad</label>
-			<input name="city" type="text" />
-		</div>
-		<div>
-			<label>Deo grada</label>
-			<input name="hood" type="text" />
-		</div>
-		<div>
-			<label>Ulica</label>
-			<input name="street" type="text" />
-		</div>
-		<div>
-			<label>Cena</label>
-			<input name="price" type="text" />
-		</div>
-		<div>
-			<label>Kvadratura</label>
-			<input name="surface" type="text" />
-		</div>
-		<div>
-			<label>Tip nekretnine</label>
-			<input name="type" type="text" />
-		</div>
-		<div>
-			<label>E-mail</label>
-			<input name="email" type="text" />
-		</div>
-		<div>
-			<label>Komentar</label>
-			<textarea name="comment" rows="4" cols="50"></textarea>
-		</div>
-		
-		<input type="submit" value="Pošalji"/>
-	</form>
-
-	<script>
-
-		class Search {
-			static MIN_LENGTH		= 4
-			static DEBOUNCE			= 400;
-			static RESULT_TEMPLATE	= `
-				<div class="search-result" data-key="{key}">
-					<span>{ad_title}</span>
-					<span>{city}</span>
+	<div class="container bg-light">
+		<div class="row">
+			<div class="col-sm-6">
+				<h3>Pretraga</h3>
+				<hr class="mt-2 mb-3" />
+				<div>
+					<div class="input-group rounded">
+						<input id="ad-search" type="search" class="form-control rounded"
+							placeholder="Pretraži po naslovu" aria-describedby="search-addon" />
+						<span class="input-group-text border-0" id="search-addon">
+							<i class="fas fa-search"></i>
+						</span>
+					</div>
+					<div id="ad-search-results" class="list-group">
+					</div>
 				</div>
-			`;
+			</div>
+			<div class="col-sm-6 position-relative">
+				<h3>Oglas</h3>
+				<hr class="mt-2 mb-3" />
+				<form id="ad-form" method="post" action="<?= url('send-mail') ?>">
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Naslov</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="ad_title" type="text" data-rules="required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Grad</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="city" type="text" data-rules="required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Deo grada</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="hood" type="text" data-rules="required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Ulica</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="street" type="text" data-rules="required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Cena</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="price" type="text" data-rules="required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Kvadratura</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="surface" type="text" data-rules="required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Tip nekretnine</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="type" type="text" data-rules="required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Email</label>
+						<div class="col-sm-8">
+							<input class="form-control" name="email" type="text" data-rules="email|required" />
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
+					<div class="form-group row mb-5">
+						<label class="col-sm-4 col-form-label">Komentar</label>
+						<div class="col-sm-8">
+							<textarea class="form-control" name="comment" rows="4" cols="50"></textarea>
+							<div class="invalid-tooltip"></div>
+						</div>
+					</div>
 
-			constructor(form, input, container) {
-				this.form		= form;
-				this.input		= $(input);
-				this.container	= $(container);
-				this.timeout	= null;
-				this.results	= [];
-				this.search		= this.search.bind(this);
+					<input class="btn btn-primary mt-2" type="submit" value="Pošalji" />
+				</form>
+			</div>
+		</div>
 
-				this.input.on('input', this.search);
-			}
-
-			async search(event) {
-				this.value = $(event.target).val();
-
-				if (this.value.length < Search.MIN_LENGTH) {
-					return;
-				}
-
-				await this.debounce();
-
-				this.results = await this.getResults();
-
-				this.clearResults();
-				this.renderResults();
-				this.initializeResults();
-			}
-
-			async debounce() {
-				if (this.timeout !== null) {
-					clearTimeout(this.timeout);
-				}
-
-				return new Promise((resolve, reject) => {
-					this.timeout = setTimeout(resolve, Search.DEBOUNCE);
-				})
-			}
-
-			async getResults() {
-				return new Promise((resolve, reject) => {
-					$.ajax({
-						url: '<?= url('get-ads') ?>',
-						method: 'POST',
-						data: { title: this.value },
-						success: (response) => {
-							if (typeof(response) === 'string') {
-								response = JSON.parse(response);
-							}
-
-							resolve(response);
-						},
-						error: (response) => {
-							reject(response);
-						}
-					});
-				})
-			}
-
-			clearResults() {
-				$('.search-result').off('click');
-
-				this.container.empty();
-			}
-
-			renderResults() {
-				let html = '';
-
-				for (let key in this.results) {
-					let record		= this.results[key];
-					let template	= Search.RESULT_TEMPLATE.replace(`{key}`, key);
-
-					for (let name in record) {
-						template = template.replace(`{${name}}`, record[name]);
-					}
-
-					html += template;
-				}
-
-				this.container.html(html);
-			}
-
-			initializeResults() {
-				const _this = this;
-
-				$('.search-result').on('click', function() {
-					let key		= $(this).data('key');
-					let record	= _this.results[key]
-					
-					_this.form.autocomplete(record);
-				});
-			}
-		}
-
-		class Form {
-			constructor(form) {
-				this.form	= $(form);
-				this.fields	= {};
-
-				this.getFields();
-			}
-			
-			autocomplete(record) {
-				for (let name in record) {
-					let value = record[name];
-					let field = this.fields[name];
-
-					if (field) {
-						field
-							.val(value)
-							.text(value);
-					}
-				}
-			}
-
-			getFields() {
-				let fields = this.form.find('[name]');
-
-				for (let i = 0; i < fields.length; i++) {
-					let field	= $(fields[i]);
-					let name	= field.attr('name');
-
-					this.fields[name] = field;
-				}
-			}
-		}
-
-		$(document).ready(() => {
-			const form		= new Form('#ad-form');
-			const search	= new Search(form, '#ad-search', '#ad-search-results');
-		});
-	</script>
+		<script>
+			$(document).ready(() => {
+				const form = new Form('#ad-form');
+				const search = new Search(
+					form,
+					'#ad-search',
+					'#ad-search-results',
+					`<?= url('get-ads') ?>`
+				);
+			});
+		</script>
 </body>
+
 </html>

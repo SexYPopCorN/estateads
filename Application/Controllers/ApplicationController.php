@@ -5,6 +5,7 @@ namespace Application\Controllers;
 use System\Controller;
 use System\View;
 use Application\Models\EstateAd;
+use Application\Mail\EstateAdMail;
 
 class ApplicationController extends Controller
 {
@@ -23,15 +24,19 @@ class ApplicationController extends Controller
 
 	public function sendMail($request)
 	{
-		$to      = 'nikola.barac.kg@gmail.com';
-		$subject = 'the subject';
-		$message = 'hello';
-		$headers = array(
-			'From' => 'nikola.angerfist@gmail.com',
-			'Reply-To' => 'nikola.angerfist@gmail.com',
-			'X-Mailer' => 'PHP/' . phpversion()
-		);
+		$to		= $request->input('email');
+		$data	= $request->input();
 
-		mail($to, $subject, $message, $headers);
+		try
+		{
+			(new EstateAdMail($data))
+				->to($to)
+				->subject('Estate Ad')
+				->send();
+		}
+		catch (Exception $exception)
+		{
+			http_response_code(500);
+		}
 	}
 }

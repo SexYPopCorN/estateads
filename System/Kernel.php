@@ -25,9 +25,11 @@ class Kernel
 		{
 			$this->request->setRoute($route);
 
-			$response = $route->doAction($this->request);
+			echo $route->doAction($this->request);
+
+			return;
 		}
 
-		echo($response);
+		exit("System error: no matching route found");
 	}
 }
