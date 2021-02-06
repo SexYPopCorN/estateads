@@ -14,17 +14,18 @@ class Search {
 		this.url		= url;
 		this.timeout	= null;
 		this.results	= [];
+		this.cache		= {};
 		this.search		= this.search.bind(this);
 
 		this.input.on('input', this.search);
 	}
 
 	async search(event) {
-		this.value = $(event.target).val();
+		this.phrase = $(event.target).val();
 
 		this.reset();
 
-		if (this.value.length < Search.MIN_LENGTH) {
+		if (this.phrase.length < Search.MIN_LENGTH) {
 			return;
 		}
 
@@ -45,10 +46,22 @@ class Search {
 
 	async getResults() {
 		return new Promise((resolve, reject) => {
+			let key = this.phrase.toLowerCase();
+
+			if (this.cache[key] !== void(0)) {
+				this.results = this.cache[key];
+
+				console.info('Search::getResults() - loading from cache');
+
+				return resolve();
+			}
+
+			console.info('Search::getResults() - sending request');
+
 			$.ajax({
 				url: this.url,
 				type: 'POST',
-				data: { title: this.value },
+				data: { title: key },
 				success: (response) => {
 					if (typeof(response) === 'string') {
 						response = JSON.parse(response);
@@ -56,7 +69,9 @@ class Search {
 
 					this.results = response;
 
-					resolve(response);
+					this.cacheResults();
+
+					resolve();
 				},
 				error: (response) => {
 					reject(response);
@@ -102,5 +117,15 @@ class Search {
 			_this.input.val('');
 			_this.form.autocomplete(record);
 		});
+	}
+
+	cacheResults() {
+		let key = this.phrase.toLowerCase();
+
+		if (this.cache[key] !== void(0)) {
+			return;
+		}
+
+		this.cache[key] = this.results;
 	}
 }
