@@ -15,9 +15,11 @@ abstract class Mail
 		$from		= ($from === null) ? Config::get('mail.sender') : $from;
 		$body		= $this->build();
 		$headers	= [
-			'From'		=> 'nikola.angerfist@gmail.com',
-			'Reply-To'	=> 'nikola.angerfist@gmail.com',
-			'X-Mailer'	=> 'PHP/' . phpversion()
+			'MIME-Version'	=> '1.0',
+			'Content-type'	=> 'text/html;charset=UTF-8',
+			'From'			=> 'nikola.angerfist@gmail.com',
+			'Reply-To'		=> 'nikola.angerfist@gmail.com',
+			'X-Mailer'		=> 'PHP/' . phpversion()
 		];
 
 		// var_dump("{$body}");
